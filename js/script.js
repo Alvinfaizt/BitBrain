@@ -5,7 +5,7 @@ const quizData = [
     {
         question: "Tag HTML yang digunakan untuk membuat judul utama atau terbesar adalah...",
         options: ["<heading>", "<h6>", "<h1>", "<head>"],
-        answer: 2 // Indeks ke-2 yaitu "<h1>"
+        answer: 2
     },
     {
         question: "Sifat komputer yang paling mirip dengan sifat mantan kekasih adalah...",
@@ -37,8 +37,8 @@ let score = 0;
 let timer;
 let timeLeft = 15;
 let playerName = "";
+let wrongAnswersHistory = []; // Array baru untuk menyimpan riwayat kesalahan pemain
 
-// Mengambil elemen HTML menggunakan DOM (Document Object Model)
 const startScreen = document.getElementById("start-screen");
 const quizScreen = document.getElementById("quiz-screen");
 const resultScreen = document.getElementById("result-screen");
@@ -53,70 +53,64 @@ const answerOptionsContainer = document.getElementById("answer-options");
 const timerDisplay = document.getElementById("timer");
 const finalScoreDisplay = document.getElementById("final-score");
 const playerGreeting = document.getElementById("player-greeting");
+const reviewList = document.getElementById("review-list");
 
 /* ==========================================================================
    3. FUNGSI LOGIKA PERMAINAN
    ========================================================================== */
 
-// Fungsi untuk memulai kuis
 function startQuiz() {
     playerName = usernameInput.value.trim();
-    
-    // Validasi: Input nama tidak boleh kosong
     if (playerName === "") {
         alert("Silakan masukkan nama kamu terlebih dahulu!");
         return;
     }
 
-    // Menyimpan nama pemain ke localStorage sesuai tema fungsionalitas
     localStorage.setItem("latestPlayer", playerName);
 
-    // Pindah halaman menggunakan manipulasi class CSS
     startScreen.classList.add("hide");
     quizScreen.classList.remove("hide");
 
     currentQuestionIndex = 0;
     score = 0;
+    wrongAnswersHistory = []; // Reset riwayat kesalahan setiap kuis baru dimulai
     showQuestion();
 }
 
-// Fungsi untuk menampilkan soal kuis
 function showQuestion() {
     resetTimer();
     startTimer();
 
     const currentQuiz = quizData[currentQuestionIndex];
-    
-    // Mengatur teks nomor soal dan isi pertanyaan
     questionNumberText.innerText = `Soal ${currentQuestionIndex + 1} dari ${quizData.length}`;
     questionText.innerText = currentQuiz.question;
-
-    // Mengosongkan pilihan jawaban sebelumnya
     answerOptionsContainer.innerHTML = "";
 
-    // Perulangan (Loop) untuk menampilkan 4 pilihan jawaban berupa tombol
     currentQuiz.options.forEach((option, index) => {
         const button = document.createElement("button");
         button.innerText = option;
         button.classList.add("option-btn");
-        
-        // Menambahkan event click pada setiap tombol opsi jawaban
         button.addEventListener("click", () => checkAnswer(index));
         answerOptionsContainer.appendChild(button);
     });
 }
 
-// Fungsi untuk memeriksa jawaban pengguna
 function checkAnswer(selectedIndex) {
     clearInterval(timer);
-    const correctIndex = quizData[currentQuestionIndex].answer;
+    const currentQuiz = quizData[currentQuestionIndex];
+    const correctIndex = currentQuiz.answer;
 
-    // Kondisi (If-Else) untuk memeriksa kebenaran jawaban
     if (selectedIndex === correctIndex) {
-        score += 20; // Jika benar, skor bertambah 20 (Total 5 soal x 20 = 100)
+        score += 20;
+    } else {
+        // Logika Baru: Jika jawaban salah atau kehabisan waktu, simpan ke dalam history riwayat
+        wrongAnswersHistory.push({
+            question: currentQuiz.question,
+            userAnswer: selectedIndex === -1 ? "Waktu Habis" : currentQuiz.options[selectedIndex],
+            correctAnswer: currentQuiz.options[correctIndex]
+        });
     }
 
-    // Melanjutkan ke soal berikutnya atau ke halaman hasil akhir
     if (currentQuestionIndex < quizData.length - 1) {
         currentQuestionIndex++;
         showQuestion();
@@ -125,7 +119,6 @@ function checkAnswer(selectedIndex) {
     }
 }
 
-// Fungsi Pengatur Waktu (Timer)
 function startTimer() {
     timeLeft = 15;
     timerDisplay.innerText = timeLeft;
@@ -136,13 +129,7 @@ function startTimer() {
 
         if (timeLeft <= 0) {
             clearInterval(timer);
-            // Jika waktu habis, otomatis dianggap salah dan lanjut ke soal berikutnya
-            if (currentQuestionIndex < quizData.length - 1) {
-                currentQuestionIndex++;
-                showQuestion();
-            } else {
-                showResult();
-            }
+            checkAnswer(-1); // Kirim nilai indeks -1 sebagai penanda waktu habis (jawaban otomatis salah)
         }
     }, 1000);
 }
@@ -151,7 +138,6 @@ function resetTimer() {
     clearInterval(timer);
 }
 
-// Fungsi untuk menampilkan halaman skor akhir
 function showResult() {
     quizScreen.classList.add("hide");
     resultScreen.classList.remove("hide");
@@ -159,12 +145,31 @@ function showResult() {
     playerGreeting.innerText = `Hebat, ${playerName}! Kamu telah menyelesaikan kuis BitBrain.`;
     finalScoreDisplay.innerText = score;
     
-    // Menyimpan skor akhir ke localStorage
     localStorage.setItem("latestScore", score);
+
+    // Menampilkan daftar review soal yang dijawab salah
+    reviewList.innerHTML = "";
+    if (wrongAnswersHistory.length === 0) {
+        reviewList.innerHTML = "<p style='color: #00ff88; font-size: 0.95rem;'>Sempurna! Kamu menjawab semua pertanyaan dengan benar! 🚀</p>";
+    } else {
+        wrongAnswersHistory.forEach((item, index) => {
+            const reviewItem = document.createElement("div");
+            reviewItem.style.marginBottom = "15px";
+            reviewItem.style.borderBottom = "1px solid #1f232b";
+            reviewItem.style.paddingBottom = "10px";
+
+            reviewItem.innerHTML = `
+                <p style="color: #ffffff; font-weight: 600; font-size: 0.95rem;">${index + 1}. ${item.question}</p>
+                <p style="color: #ff5252; font-size: 0.85rem; margin-left: 10px;">❌ Jawabanmu: ${item.userAnswer}</p>
+                <p style="color: #00ff88; font-size: 0.85rem; margin-left: 10px;">✅ Jawaban Benar: ${item.correctAnswer}</p>
+            `;
+            reviewList.appendChild(reviewItem);
+        });
+    }
 }
 
 /* ==========================================================================
-   4. EVENT LISTENERS (Penanganan Aksi Pengguna)
+   4. EVENT LISTENERS
    ========================================================================== */
 startBtn.addEventListener("click", startQuiz);
 
