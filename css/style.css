@@ -20,7 +20,7 @@ body {
 }
 
 /* ==========================================================================
-   2. CINEMATIC INTRO SCREEN STYLES (Splash Screen)
+   2. CINEMATIC INTRO SCREEN STYLES (Splash Screen - Upgrade Animasi)
    ========================================================================== */
 #intro-screen {
     position: fixed;
@@ -33,10 +33,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s;
 }
 
-/* Class pembantu via JS saat intro selesai */
 #intro-screen.fade-out {
     opacity: 0;
     visibility: hidden;
@@ -48,36 +47,85 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
 }
 
+/* Kotak Terminal dengan Efek Mengetik */
 .terminal-loader {
     text-align: left;
-    background-color: #0d0e12;
+    background-color: #090a0f;
     border: 1px solid #1f232b;
-    padding: 15px;
-    border-radius: 6px;
+    padding: 20px;
+    border-radius: 8px;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 0.8rem;
-    color: #00ff88; /* Warna hijau teks terminal */
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    font-size: 0.85rem;
+    color: #00ff88;
+    box-shadow: inset 0 0 10px rgba(0, 255, 136, 0.05);
 }
 
+.terminal-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid transparent;
+    width: 0;
+}
+
+/* Baris 1: Mengetik langsung di awal */
+.terminal-text:nth-child(1) {
+    animation: typing 1s steps(30) forwards, blink 0.5s step-end infinite alternate;
+}
+
+/* Baris 2: Menunggu baris 1 selesai (delay 1s) */
+.terminal-text:nth-child(2) {
+    animation: typing 1s steps(35) 1s forwards, blink 0.5s step-end infinite alternate;
+}
+
+/* Baris 3: Menunggu baris 2 selesai (delay 2s) */
+.terminal-text:nth-child(3) {
+    animation: typing 0.8s steps(20) 2s forwards, blink 0.5s step-end infinite alternate;
+}
+
+/* Animasi Efek Mengetik Mekanis */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; border-right-color: #00ff88; }
+}
+
+/* Animasi Kursor Terminal Berkedip */
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* Logo Intro dengan Efek Glitch & Pendaran Pulse */
 .intro-logo {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 900;
-    letter-spacing: 5px;
-    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+    letter-spacing: 6px;
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+    animation: logoGlow 2s infinite alternate ease-in-out;
 }
 
+@keyframes logoGlow {
+    0% {
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.4), 2px 2px #ff5252;
+        transform: scale(0.99);
+    }
+    100% {
+        text-shadow: 0 0 25px rgba(0, 229, 255, 0.8), -2px -2px #00ff88;
+        transform: scale(1.01);
+    }
+}
+
+/* Progress Loading Bar Futuristik */
 .progress-bar-container {
     width: 100%;
     height: 6px;
     background-color: #1f232b;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .progress-bar {
@@ -85,15 +133,14 @@ body {
     width: 0;
     background: linear-gradient(90deg, #00e5ff, #00ff88);
     border-radius: 10px;
-    animation: loadProgress 2.8s forwards ease-in-out;
+    animation: loadProgress 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-/* Animasi menggerakkan Loading Bar */
 @keyframes loadProgress {
     0% { width: 0%; }
-    20% { width: 15%; }
-    50% { width: 65%; }
-    80% { width: 90%; }
+    15% { width: 20%; }
+    40% { width: 45%; }
+    70% { width: 85%; }
     100% { width: 100%; }
 }
 
