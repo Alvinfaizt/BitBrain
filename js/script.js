@@ -10,6 +10,7 @@ let playerName = "";
 let wrongAnswersHistory = [];
 
 // Screen Halaman
+const introScreen = document.getElementById("intro-screen");
 const mainMenu = document.getElementById("main-menu");
 const nameScreen = document.getElementById("name-screen");
 const quizScreen = document.getElementById("quiz-screen");
@@ -33,7 +34,19 @@ const playerGreeting = document.getElementById("player-greeting");
 const reviewList = document.getElementById("review-list");
 
 /* ==========================================================================
-   2. ALGORITMA PENGACAK (Fisher-Yates)
+   2. SISTEM MANAJEMEN INTRO INTRO SCREEN (SPLASH SCREEN)
+   ========================================================================== */
+// Ketika website selesai dimuat sepenuhnya, jalankan hitung mundur intro
+window.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        if (introScreen) {
+            introScreen.classList.add("fade-out");
+        }
+    }, 3000); // Intro ditahan selama 3 detik sebelum masuk ke main menu
+});
+
+/* ==========================================================================
+   3. ALGORITMA PENGACAK (Fisher-Yates)
    ========================================================================== */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -44,7 +57,7 @@ function shuffleArray(array) {
 }
 
 /* ==========================================================================
-   3. FUNGSI NAVIGASI & LOGIKA GAME
+   4. FUNGSI NAVIGASI & LOGIKA GAME
    ========================================================================== */
 
 // Klik "PLAY GAME" di Menu Utama -> Buka layar input nama
@@ -176,12 +189,12 @@ function showResult() {
 }
 
 /* ==========================================================================
-   4. EVENT LISTENERS UTAMA
+   5. EVENT LISTENERS UTAMA
    ========================================================================== */
 startGameBtn.addEventListener("click", initQuizData);
 
 restartBtn.addEventListener("click", () => {
     resultScreen.classList.add("hide");
-    mainMenu.classList.remove("hide"); // Kembali ke menu utama terdepan
+    mainMenu.classList.remove("hide"); 
     usernameInput.value = "";
 });
