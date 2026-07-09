@@ -16,10 +16,89 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    overflow-x: hidden;
 }
 
 /* ==========================================================================
-   2. HEADER & LAYOUT COMPONENT
+   2. CINEMATIC INTRO SCREEN STYLES (Splash Screen)
+   ========================================================================== */
+#intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #050608;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+/* Class pembantu via JS saat intro selesai */
+#intro-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.intro-content {
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.terminal-loader {
+    text-align: left;
+    background-color: #0d0e12;
+    border: 1px solid #1f232b;
+    padding: 15px;
+    border-radius: 6px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    color: #00ff88; /* Warna hijau teks terminal */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.intro-logo {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 6px;
+    background-color: #1f232b;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #00e5ff, #00ff88);
+    border-radius: 10px;
+    animation: loadProgress 2.8s forwards ease-in-out;
+}
+
+/* Animasi menggerakkan Loading Bar */
+@keyframes loadProgress {
+    0% { width: 0%; }
+    20% { width: 15%; }
+    50% { width: 65%; }
+    80% { width: 90%; }
+    100% { width: 100%; }
+}
+
+/* ==========================================================================
+   3. HEADER & LAYOUT COMPONENT
    ========================================================================== */
 header {
     width: 100%;
@@ -50,7 +129,7 @@ header {
 }
 
 /* ==========================================================================
-   3. MAIN QUIZ CONTAINER (Flexbox/Grid Responsif)
+   4. MAIN QUIZ CONTAINER
    ========================================================================== */
 .quiz-container {
     width: 90%;
@@ -75,7 +154,7 @@ header {
 }
 
 /* ==========================================================================
-   4. GAME MENU & STYLING JUDUL
+   5. GAME MENU & STYLING JUDUL
    ========================================================================== */
 .game-title-box {
     margin-bottom: 10px;
@@ -103,7 +182,7 @@ header {
 }
 
 /* ==========================================================================
-   5. FORM ELEMENTS & BUTTONS (Gamer UI Style)
+   6. FORM ELEMENTS & BUTTONS
    ========================================================================== */
 h2 {
     font-size: 1.8rem;
@@ -144,7 +223,6 @@ p {
     transition: all 0.2s ease;
 }
 
-/* Tombol Utama (Aksen Putih Bersih) */
 .btn-primary {
     background-color: #ffffff;
     color: #0d0e12;
@@ -155,7 +233,6 @@ p {
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
-/* Tombol Sekunder (Aksen Gelap Futuristik) */
 .btn-secondary {
     background-color: #1f232b;
     color: #ffffff;
@@ -172,7 +249,7 @@ p {
 }
 
 /* ==========================================================================
-   6. QUIZ INTERACTION GRID (Pilihan Ganda)
+   7. QUIZ INTERACTION GRID
    ========================================================================== */
 .quiz-header {
     text-align: left;
@@ -212,7 +289,7 @@ p {
 }
 
 /* ==========================================================================
-   7. RESULT SCREEN COMPONENT
+   8. RESULT SCREEN COMPONENT
    ========================================================================== */
 .score-box {
     background-color: #0d0e12;
@@ -229,7 +306,7 @@ p {
 }
 
 /* ==========================================================================
-   8. FOOTER STYLES
+   9. FOOTER STYLES
    ========================================================================== */
 footer {
     width: 100%;
