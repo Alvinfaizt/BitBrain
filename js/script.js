@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. DEKLARASI VARIABEL UTAMA
+   1. DEKLARASI VARIABEL UTAMA & DOM ELEMENTS
    ========================================================================== */
 let shuffledQuestions = []; 
 let currentQuestionIndex = 0;
@@ -9,13 +9,20 @@ let timeLeft = 15;
 let playerName = "";
 let wrongAnswersHistory = [];
 
-const startScreen = document.getElementById("start-screen");
+// Screen Halaman
+const mainMenu = document.getElementById("main-menu");
+const nameScreen = document.getElementById("name-screen");
 const quizScreen = document.getElementById("quiz-screen");
 const resultScreen = document.getElementById("result-screen");
 
-const startBtn = document.getElementById("start-btn");
+// Tombol Kendali
+const playBtn = document.getElementById("play-btn");
+const howToBtn = document.getElementById("how-to-btn");
+const startGameBtn = document.getElementById("start-game-btn");
+const backToMenuBtn = document.getElementById("back-to-menu-btn");
 const restartBtn = document.getElementById("restart-btn");
 
+// Input & Output Output Teks
 const usernameInput = document.getElementById("username");
 const questionNumberText = document.getElementById("question-number");
 const questionText = document.getElementById("question-text");
@@ -26,7 +33,7 @@ const playerGreeting = document.getElementById("player-greeting");
 const reviewList = document.getElementById("review-list");
 
 /* ==========================================================================
-   2. ALGORITMA PENGACAK UTAMA (Fisher-Yates)
+   2. ALGORITMA PENGACAK (Fisher-Yates)
    ========================================================================== */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -37,21 +44,40 @@ function shuffleArray(array) {
 }
 
 /* ==========================================================================
-   3. FUNGSI INTI JALANNYA KUIS
+   3. FUNGSI NAVIGASI & LOGIKA GAME
    ========================================================================== */
-function startQuiz() {
+
+// Klik "PLAY GAME" di Menu Utama -> Buka layar input nama
+playBtn.addEventListener("click", () => {
+    mainMenu.classList.add("hide");
+    nameScreen.classList.remove("hide");
+});
+
+// Klik "HOW TO PLAY" di Menu Utama -> Munculkan alert instruksi ringkas
+howToBtn.addEventListener("click", () => {
+    alert("📜 CARA BERMAIN BITBRAIN:\n\n1. Masukkan nickname kamu.\n2. Sistem akan memilih 10 soal IT secara acak.\n3. Kamu punya waktu 15 detik per soal.\n4. Jawab benar = +10 poin, salah/waktu habis = 0 poin.\n5. Evaluasi kesalahanmu di akhir game!");
+});
+
+// Klik "BACK" di layar nama -> Kembali ke Menu Utama
+backToMenuBtn.addEventListener("click", () => {
+    nameScreen.classList.add("hide");
+    mainMenu.classList.remove("hide");
+});
+
+// Klik "START" setelah isi nama -> Mulai Kuis Semestinya
+function initQuizData() {
     playerName = usernameInput.value.trim();
     if (playerName === "") {
-        alert("Silakan masukkan nama kamu terlebih dahulu!");
+        alert("Masukkan namamu dulu sebelum bertanding!");
         return;
     }
 
     localStorage.setItem("latestPlayer", playerName);
 
-    startScreen.classList.add("hide");
+    nameScreen.classList.add("hide");
     quizScreen.classList.remove("hide");
 
-    // ALGORITMA SUPER: Acak seluruh 105 soal, lalu potong (.slice) ambil 10 soal acak teratas saja!
+    // Ambil 10 soal acak murni dari berkas berkas questions.js
     shuffledQuestions = shuffleArray([...masterQuizData]).slice(0, 10);
 
     currentQuestionIndex = 0;
@@ -84,7 +110,7 @@ function checkAnswer(selectedIndex) {
     const correctIndex = currentQuiz.answer;
 
     if (selectedIndex === correctIndex) {
-        score += 10; // 10 soal acak x 10 poin = 100 poin maksimal
+        score += 10;
     } else {
         wrongAnswersHistory.push({
             question: currentQuiz.question,
@@ -124,14 +150,14 @@ function showResult() {
     quizScreen.classList.add("hide");
     resultScreen.classList.remove("hide");
 
-    playerGreeting.innerText = `Hebat, ${playerName}! Kamu telah menyelesaikan kuis BitBrain.`;
+    playerGreeting.innerText = `GAME OVER! GG WP, ${playerName}!`;
     finalScoreDisplay.innerText = score;
     
     localStorage.setItem("latestScore", score);
 
     reviewList.innerHTML = "";
     if (wrongAnswersHistory.length === 0) {
-        reviewList.innerHTML = "<p style='color: #00ff88; font-size: 0.95rem;'>Sempurna! Kamu menjawab semua pertanyaan dengan benar! 🚀</p>";
+        reviewList.innerHTML = "<p style='color: #00ff88; font-size: 0.95rem;'>PERFECT GAME! Kamu melibas semua soal tanpa cacat! 🚀</p>";
     } else {
         wrongAnswersHistory.forEach((item, index) => {
             const reviewItem = document.createElement("div");
@@ -150,12 +176,12 @@ function showResult() {
 }
 
 /* ==========================================================================
-   4. EVENT LISTENERS
+   4. EVENT LISTENERS UTAMA
    ========================================================================== */
-startBtn.addEventListener("click", startQuiz);
+startGameBtn.addEventListener("click", initQuizData);
 
 restartBtn.addEventListener("click", () => {
     resultScreen.classList.add("hide");
-    startScreen.classList.remove("hide");
+    mainMenu.classList.remove("hide"); // Kembali ke menu utama terdepan
     usernameInput.value = "";
 });
