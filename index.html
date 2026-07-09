@@ -4,69 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BitBrain - Kuis Tebak-Tebakan IT</title>
-    <!-- Menghubungkan ke file CSS Eksternal (Sesuai Ketentuan Teknis) -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <!-- Header Aplikasi -->
     <header>
         <div class="logo">🧠 BitBrain</div>
         <div class="timer-box">Sisa Waktu: <span id="timer">15</span>s</div>
     </header>
 
-    <!-- Kontainer Utama Kuis -->
     <main class="quiz-container">
         
-        <!-- BAGIAN 1: Halaman Mulai (Landing) -->
-        <section id="start-screen" class="screen">
-            <h1>Selamat Datang di BitBrain!</h1>
-            <p>Uji kemampuan dan selera humormu lewat kuis tebak-tebakan IT ini.</p>
-            <div class="input-group">
-                <input type="text" id="username" placeholder="Masukkan nama kamu..." required>
+        <section id="main-menu" class="screen">
+            <div class="game-title-box">
+                <h1 class="glitch-title">BITBRAIN</h1>
+                <p class="subtitle">PREPARE YOUR SYNTAX, TEST YOUR BRAIN</p>
             </div>
-            <button id="start-btn" class="btn">Mulai Kuis</button>
+            <div class="menu-buttons">
+                <button id="play-btn" class="btn btn-primary">🎮 PLAY GAME</button>
+                <button id="how-to-btn" class="btn btn-secondary">📜 HOW TO PLAY</button>
+            </div>
         </section>
 
-        <!-- BAGIAN 2: Halaman Pertanyaan -->
+        <section id="name-screen" class="screen hide">
+            <h2>ENTER YOUR NICKNAME</h2>
+            <p>Masukkan nama aslimu/samaranmu untuk mencatat skor di local storage.</p>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Contoh: HackerSakti_99" maxlength="20" required>
+            </div>
+            <div class="menu-buttons">
+                <button id="start-game-btn" class="btn btn-primary">START 🚀</button>
+                <button id="back-to-menu-btn" class="btn btn-secondary">BACK</button>
+            </div>
+        </section>
+
         <section id="quiz-screen" class="screen hide">
             <div class="quiz-header">
                 <span id="question-number">Soal 1 dari 10</span>
             </div>
             <h2 id="question-text">Di sini tempat teks pertanyaan kuis IT...</h2>
             <div id="answer-options" class="options-grid">
-                <!-- Tombol pilihan ganda muncul secara dinamis via JS -->
-            </div>
+                </div>
         </section>
 
-        <!-- BAGIAN 3: Halaman Hasil Akhir & Review Jawaban Salah -->
         <section id="result-screen" class="screen hide">
-            <h2>Kuis Selesai!</h2>
-            <p id="player-greeting">Hebat, [Nama Players]!</p>
+            <h2>GAME OVER</h2>
+            <p id="player-greeting">Hebat, Player!</p>
             <div class="score-box">
-                <p>Skor Kamu:</p>
+                <p>TOTAL SCORE:</p>
                 <span id="final-score">0</span>
             </div>
             
-            <!-- Elemen untuk menampilkan review evaluasi kesalahan -->
             <div id="review-container" style="text-align: left; margin-top: 10px; max-height: 200px; overflow-y: auto; background: #0d0e12; padding: 15px; border-radius: 8px; border: 1px solid #2a2f3a;">
                 <h3 style="font-size: 1.1rem; margin-bottom: 10px; color: #00e5ff;">Review Kesalahan Kamu:</h3>
                 <div id="review-list"></div>
             </div>
 
-            <button id="restart-btn" class="btn">Main Lagi</button>
+            <button id="restart-btn" class="btn btn-primary">🔄 PLAY AGAIN</button>
         </section>
 
     </main>
 
-    <!-- Footer / Hak Cipta Kelompok -->
     <footer>
         <p>&copy; 2026 BitBrain Team. All Rights Reserved.</p>
     </footer>
 
-    <!-- BERKAS DATA UTAMA: 105+ Bank Soal IT -->
     <script src="js/questions.js"></script>
-    <!-- LOGIKA SISTEM: Penggerak Aplikasi -->
     <script src="js/script.js"></script>
 </body>
 </html>
