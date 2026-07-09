@@ -9,8 +9,8 @@
 }
 
 body {
-    background-color: #0d0e12; /* Hitam pekat modern */
-    color: #ffffff; /* Teks putih kontras tinggi */
+    background-color: #0d0e12; 
+    color: #ffffff; 
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -46,7 +46,7 @@ header {
 }
 
 #timer {
-    color: #00e5ff; /* Aksen biru neon untuk penanda waktu */
+    color: #00e5ff; 
 }
 
 /* ==========================================================================
@@ -55,7 +55,7 @@ header {
 .quiz-container {
     width: 90%;
     max-width: 600px;
-    background-color: #161920; /* Abu-abu gelap berkontras tinggi */
+    background-color: #161920; 
     border: 2px solid #2a2f3a;
     border-radius: 16px;
     padding: 30px;
@@ -70,21 +70,48 @@ header {
     text-align: center;
 }
 
-/* Utilitas untuk menyembunyikan halaman yang belum aktif */
 .hide {
     display: none !important;
 }
 
 /* ==========================================================================
-   4. FORM ELEMENTS & BUTTONS
+   4. GAME MENU & STYLING JUDUL
    ========================================================================== */
-h1 {
-    font-size: 2rem;
+.game-title-box {
     margin-bottom: 10px;
 }
 
+.glitch-title {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #ffffff;
+    text-shadow: 2px 2px #00e5ff, -2px -2px #ff5252;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: #00e5ff;
+    font-weight: bold;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ==========================================================================
+   5. FORM ELEMENTS & BUTTONS (Gamer UI Style)
+   ========================================================================== */
+h2 {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
 p {
-    color: #b3b9c9; /* Putih agak redup untuk deskripsi secondary */
+    color: #b3b9c9; 
     font-size: 1rem;
     line-height: 1.5;
 }
@@ -96,38 +123,56 @@ p {
     border: 2px solid #2a2f3a;
     border-radius: 8px;
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    text-align: center;
     outline: none;
     transition: border-color 0.3s ease;
 }
 
 .input-group input:focus {
-    border-color: #ffffff; /* Kontras putih penuh saat fokus */
+    border-color: #00e5ff;
 }
 
 .btn {
     width: 100%;
-    padding: 14px;
-    background-color: #ffffff; /* Tombol putih kontras tinggi */
-    color: #0d0e12; /* Teks hitam di dalam tombol */
+    padding: 16px;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: all 0.2s ease;
 }
 
-.btn:hover {
+/* Tombol Utama (Aksen Putih Bersih) */
+.btn-primary {
+    background-color: #ffffff;
+    color: #0d0e12;
+}
+
+.btn-primary:hover {
     background-color: #e0e0e0;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Tombol Sekunder (Aksen Gelap Futuristik) */
+.btn-secondary {
+    background-color: #1f232b;
+    color: #ffffff;
+    border: 2px solid #2a2f3a;
+}
+
+.btn-secondary:hover {
+    background-color: #2a2f3a;
+    border-color: #00e5ff;
 }
 
 .btn:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
 }
 
 /* ==========================================================================
-   5. QUIZ INTERACTION GRID (Pilihan Ganda)
+   6. QUIZ INTERACTION GRID (Pilihan Ganda)
    ========================================================================== */
 .quiz-header {
     text-align: left;
@@ -144,7 +189,7 @@ p {
 
 .options-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Responsif: 1 kolom di HP secara bawaan */
+    grid-template-columns: 1fr; 
     gap: 12px;
 }
 
@@ -163,11 +208,11 @@ p {
 
 .option-btn:hover {
     background-color: #2a2f3a;
-    border-color: #ffffff;
+    border-color: #00e5ff;
 }
 
 /* ==========================================================================
-   6. RESULT SCREEN COMPONENT
+   7. RESULT SCREEN COMPONENT
    ========================================================================== */
 .score-box {
     background-color: #0d0e12;
@@ -184,7 +229,7 @@ p {
 }
 
 /* ==========================================================================
-   7. FOOTER STYLES
+   8. FOOTER STYLES
    ========================================================================== */
 footer {
     width: 100%;
@@ -195,11 +240,7 @@ footer {
     font-size: 0.85rem;
 }
 
-/* ==========================================================================
-   8. MEDIA QUERIES (Ketentuan Tampilan Responsif)
-   ========================================================================== */
 @media (min-width: 600px) {
-    /* Ketika layar di atas 600px (Desktop/Tablet), pilihan ganda menjadi 2 kolom */
     .options-grid {
         grid-template-columns: 1fr 1fr;
     }
