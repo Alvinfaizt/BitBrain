@@ -1,7 +1,7 @@
 /* ==========================================================================
-   1. BANK SOAL (Array Objek Kuis Tebak-Tebakan IT)
+   1. BANK SOAL LEBIH BANYAK (10 Soal Kuis IT Variatif)
    ========================================================================== */
-const quizData = [
+const masterQuizData = [
     {
         question: "Tag HTML yang digunakan untuk membuat judul utama atau terbesar adalah...",
         options: ["<heading>", "<h6>", "<h1>", "<head>"],
@@ -26,18 +26,44 @@ const quizData = [
         question: "Jika kamu membuat kesalahan penulisan kode di CSS, efek yang paling sering terjadi adalah...",
         options: ["Komputer meledak", "Tampilan web menjadi berantakan", "Kuota internet habis", "Dapat nilai A otomatis"],
         answer: 1
+    },
+    {
+        question: "Protokol standar yang digunakan untuk mengamankan pengiriman data di website (ada ikon gembok di URL) adalah...",
+        options: ["HTTP", "HTTPS", "FTP", "SMTP"],
+        answer: 1
+    },
+    {
+        question: "Satu-satunya makhluk hidup yang bisa memahami isi hati dan pikiran seorang programmer adalah...",
+        options: ["Pacar", "Dosen Wali", "ChatGPT / AI", "Rubber Duck (Bebek Karet)"],
+        answer: 3
+    },
+    {
+        question: "Di bawah ini yang merupakan komponen 'otak' atau pusat pemrosesan data utama pada komputer adalah...",
+        options: ["RAM", "Processor / CPU", "SSD", "GPU"],
+        answer: 1
+    },
+    {
+        question: "Istilah untuk error atau kesalahan di dalam kode program dinamakan...",
+        options: ["Bug", "Virus", "Worm", "Crash"],
+        answer: 0
+    },
+    {
+        question: "Kombinasi tombol keyboard jalan pintas (shortcut) legendaris untuk menyelamatkan tugas dari pemadaman listrik tiba-tiba adalah...",
+        options: ["Ctrl + C", "Ctrl + V", "Ctrl + S", "Ctrl + Z"],
+        answer: 2
     }
 ];
 
 /* ==========================================================================
    2. DEKLARASI VARIABEL UTAMA
    ========================================================================== */
+let shuffledQuestions = []; // Array tempat menampung soal yang sudah diacak
 let currentQuestionIndex = 0;
 let score = 0;
 let timer;
 let timeLeft = 15;
 let playerName = "";
-let wrongAnswersHistory = []; // Array baru untuk menyimpan riwayat kesalahan pemain
+let wrongAnswersHistory = [];
 
 const startScreen = document.getElementById("start-screen");
 const quizScreen = document.getElementById("quiz-screen");
@@ -56,8 +82,17 @@ const playerGreeting = document.getElementById("player-greeting");
 const reviewList = document.getElementById("review-list");
 
 /* ==========================================================================
-   3. FUNGSI LOGIKA PERMAINAN
+   3. FUNGSI LOGIKA PERMAINAN & ALGORITMA PENGACAK
    ========================================================================== */
+
+// Fungsi untuk mengacak urutan elemen di dalam Array (Algoritma Fisher-Yates)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
 function startQuiz() {
     playerName = usernameInput.value.trim();
@@ -71,9 +106,12 @@ function startQuiz() {
     startScreen.classList.add("hide");
     quizScreen.classList.remove("hide");
 
+    // LOGIKA BARU: Gandakan bank soal asli lalu acak urutannya agar tidak merusak data master
+    shuffledQuestions = shuffleArray([...masterQuizData]);
+
     currentQuestionIndex = 0;
     score = 0;
-    wrongAnswersHistory = []; // Reset riwayat kesalahan setiap kuis baru dimulai
+    wrongAnswersHistory = [];
     showQuestion();
 }
 
@@ -81,8 +119,9 @@ function showQuestion() {
     resetTimer();
     startTimer();
 
-    const currentQuiz = quizData[currentQuestionIndex];
-    questionNumberText.innerText = `Soal ${currentQuestionIndex + 1} dari ${quizData.length}`;
+    // Mengambil soal dari array yang sudah teracak
+    const currentQuiz = shuffledQuestions[currentQuestionIndex];
+    questionNumberText.innerText = `Soal ${currentQuestionIndex + 1} dari ${shuffledQuestions.length}`;
     questionText.innerText = currentQuiz.question;
     answerOptionsContainer.innerHTML = "";
 
@@ -97,13 +136,12 @@ function showQuestion() {
 
 function checkAnswer(selectedIndex) {
     clearInterval(timer);
-    const currentQuiz = quizData[currentQuestionIndex];
+    const currentQuiz = shuffledQuestions[currentQuestionIndex];
     const correctIndex = currentQuiz.answer;
 
     if (selectedIndex === correctIndex) {
-        score += 20;
+        score += 10; // Mengubah kalkulasi skor: 10 soal x 10 poin = total 100 poin maksimal
     } else {
-        // Logika Baru: Jika jawaban salah atau kehabisan waktu, simpan ke dalam history riwayat
         wrongAnswersHistory.push({
             question: currentQuiz.question,
             userAnswer: selectedIndex === -1 ? "Waktu Habis" : currentQuiz.options[selectedIndex],
@@ -111,7 +149,7 @@ function checkAnswer(selectedIndex) {
         });
     }
 
-    if (currentQuestionIndex < quizData.length - 1) {
+    if (currentQuestionIndex < shuffledQuestions.length - 1) {
         currentQuestionIndex++;
         showQuestion();
     } else {
@@ -129,7 +167,7 @@ function startTimer() {
 
         if (timeLeft <= 0) {
             clearInterval(timer);
-            checkAnswer(-1); // Kirim nilai indeks -1 sebagai penanda waktu habis (jawaban otomatis salah)
+            checkAnswer(-1); 
         }
     }, 1000);
 }
@@ -147,7 +185,6 @@ function showResult() {
     
     localStorage.setItem("latestScore", score);
 
-    // Menampilkan daftar review soal yang dijawab salah
     reviewList.innerHTML = "";
     if (wrongAnswersHistory.length === 0) {
         reviewList.innerHTML = "<p style='color: #00ff88; font-size: 0.95rem;'>Sempurna! Kamu menjawab semua pertanyaan dengan benar! 🚀</p>";
