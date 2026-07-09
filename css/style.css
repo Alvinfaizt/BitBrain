@@ -1,0 +1,206 @@
+/* ==========================================================================
+   1. RESET & FONT CONFIGURATION (Global Styles)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0d0e12; /* Hitam pekat modern */
+    color: #ffffff; /* Teks putih kontras tinggi */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ==========================================================================
+   2. HEADER & LAYOUT COMPONENT
+   ========================================================================== */
+header {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #1f232b;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.timer-box {
+    background-color: #1f232b;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid #3a3f4d;
+}
+
+#timer {
+    color: #00e5ff; /* Aksen biru neon untuk penanda waktu */
+}
+
+/* ==========================================================================
+   3. MAIN QUIZ CONTAINER (Flexbox/Grid Responsif)
+   ========================================================================== */
+.quiz-container {
+    width: 90%;
+    max-width: 600px;
+    background-color: #161920; /* Abu-abu gelap berkontras tinggi */
+    border: 2px solid #2a2f3a;
+    border-radius: 16px;
+    padding: 30px;
+    margin: 40px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.screen {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+}
+
+/* Utilitas untuk menyembunyikan halaman yang belum aktif */
+.hide {
+    display: none !important;
+}
+
+/* ==========================================================================
+   4. FORM ELEMENTS & BUTTONS
+   ========================================================================== */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #b3b9c9; /* Putih agak redup untuk deskripsi secondary */
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    background-color: #0d0e12;
+    border: 2px solid #2a2f3a;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #ffffff; /* Kontras putih penuh saat fokus */
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #ffffff; /* Tombol putih kontras tinggi */
+    color: #0d0e12; /* Teks hitam di dalam tombol */
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+    background-color: #e0e0e0;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* ==========================================================================
+   5. QUIZ INTERACTION GRID (Pilihan Ganda)
+   ========================================================================== */
+.quiz-header {
+    text-align: left;
+    font-size: 0.9rem;
+    color: #888e9b;
+    font-weight: 600;
+}
+
+#question-text {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Responsif: 1 kolom di HP secara bawaan */
+    gap: 12px;
+}
+
+.option-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #1f232b;
+    color: #ffffff;
+    border: 2px solid #2a2f3a;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.option-btn:hover {
+    background-color: #2a2f3a;
+    border-color: #ffffff;
+}
+
+/* ==========================================================================
+   6. RESULT SCREEN COMPONENT
+   ========================================================================== */
+.score-box {
+    background-color: #0d0e12;
+    border: 2px solid #2a2f3a;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 10px 0;
+}
+
+#final-score {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #00e5ff;
+}
+
+/* ==========================================================================
+   7. FOOTER STYLES
+   ========================================================================== */
+footer {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    border-top: 2px solid #1f232b;
+    color: #535865;
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   8. MEDIA QUERIES (Ketentuan Tampilan Responsif)
+   ========================================================================== */
+@media (min-width: 600px) {
+    /* Ketika layar di atas 600px (Desktop/Tablet), pilihan ganda menjadi 2 kolom */
+    .options-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
