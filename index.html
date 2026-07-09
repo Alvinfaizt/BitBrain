@@ -4,17 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BitBrain - Kuis Tebak-Tebakan IT</title>
+    <!-- Menghubungkan ke file CSS Eksternal -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+    <!-- BAGIAN 0: SINEMATIK INTRO SCREEN (Splash Screen) -->
+    <div id="intro-screen">
+        <div class="intro-content">
+            <div class="terminal-loader">
+                <span class="terminal-text">> Loading BitBrain Protocol...</span>
+                <span class="terminal-text">> Initializing Database 105+ Questions...</span>
+                <span class="terminal-text">> Ready Player One...</span>
+            </div>
+            <h1 class="intro-logo">🧠 BITBRAIN</h1>
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Aplikasi -->
     <header>
         <div class="logo">🧠 BitBrain</div>
         <div class="timer-box">Sisa Waktu: <span id="timer">15</span>s</div>
     </header>
 
+    <!-- Kontainer Utama Kuis -->
     <main class="quiz-container">
         
+        <!-- BAGIAN 1: Halaman Menu Utama (Main Menu Game) -->
         <section id="main-menu" class="screen">
             <div class="game-title-box">
                 <h1 class="glitch-title">BITBRAIN</h1>
@@ -26,6 +45,7 @@
             </div>
         </section>
 
+        <!-- BAGIAN 2: Pop-up / Layar Input Nickname -->
         <section id="name-screen" class="screen hide">
             <h2>ENTER YOUR NICKNAME</h2>
             <p>Masukkan nama aslimu/samaranmu untuk mencatat skor di local storage.</p>
@@ -38,15 +58,18 @@
             </div>
         </section>
 
+        <!-- BAGIAN 3: Halaman Pertanyaan Kuis -->
         <section id="quiz-screen" class="screen hide">
             <div class="quiz-header">
                 <span id="question-number">Soal 1 dari 10</span>
             </div>
             <h2 id="question-text">Di sini tempat teks pertanyaan kuis IT...</h2>
             <div id="answer-options" class="options-grid">
-                </div>
+                <!-- Tombol pilihan ganda muncul secara dinamis via JS -->
+            </div>
         </section>
 
+        <!-- BAGIAN 4: Halaman Hasil Akhir & Review Jawaban Salah -->
         <section id="result-screen" class="screen hide">
             <h2>GAME OVER</h2>
             <p id="player-greeting">Hebat, Player!</p>
@@ -65,11 +88,14 @@
 
     </main>
 
+    <!-- Footer / Hak Cipta Kelompok -->
     <footer>
         <p>&copy; 2026 BitBrain Team. All Rights Reserved.</p>
     </footer>
 
+    <!-- BERKAS DATA UTAMA: 105+ Bank Soal IT -->
     <script src="js/questions.js"></script>
+    <!-- LOGIKA SISTEM: Penggerak Aplikasi -->
     <script src="js/script.js"></script>
 </body>
 </html>
