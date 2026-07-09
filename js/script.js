@@ -1,63 +1,7 @@
 /* ==========================================================================
-   1. BANK SOAL LEBIH BANYAK (10 Soal Kuis IT Variatif)
+   1. DEKLARASI VARIABEL UTAMA
    ========================================================================== */
-const masterQuizData = [
-    {
-        question: "Tag HTML yang digunakan untuk membuat judul utama atau terbesar adalah...",
-        options: ["<heading>", "<h6>", "<h1>", "<head>"],
-        answer: 2
-    },
-    {
-        question: "Sifat komputer yang paling mirip dengan sifat mantan kekasih adalah...",
-        options: ["Suka nge-ghosting", "Suka tidak merespons (Not Responding)", "Boros memori", "Gampang panas"],
-        answer: 1
-    },
-    {
-        question: "Bahasa pemrograman yang berjalan di sisi browser untuk membuat halaman menjadi interaktif adalah...",
-        options: ["HTML", "CSS", "JavaScript", "PHP"],
-        answer: 2
-    },
-    {
-        question: "Kenapa programmer suka pakai baju warna hitam atau gelap?",
-        options: ["Biar kelihatan keren", "Karena warna favorit dosen", "Biar bisa menyembunyikan 'bug' di tempat gelap", "Karena malas mencuci baju"],
-        answer: 2
-    },
-    {
-        question: "Jika kamu membuat kesalahan penulisan kode di CSS, efek yang paling sering terjadi adalah...",
-        options: ["Komputer meledak", "Tampilan web menjadi berantakan", "Kuota internet habis", "Dapat nilai A otomatis"],
-        answer: 1
-    },
-    {
-        question: "Protokol standar yang digunakan untuk mengamankan pengiriman data di website (ada ikon gembok di URL) adalah...",
-        options: ["HTTP", "HTTPS", "FTP", "SMTP"],
-        answer: 1
-    },
-    {
-        question: "Satu-satunya makhluk hidup yang bisa memahami isi hati dan pikiran seorang programmer adalah...",
-        options: ["Pacar", "Dosen Wali", "ChatGPT / AI", "Rubber Duck (Bebek Karet)"],
-        answer: 3
-    },
-    {
-        question: "Di bawah ini yang merupakan komponen 'otak' atau pusat pemrosesan data utama pada komputer adalah...",
-        options: ["RAM", "Processor / CPU", "SSD", "GPU"],
-        answer: 1
-    },
-    {
-        question: "Istilah untuk error atau kesalahan di dalam kode program dinamakan...",
-        options: ["Bug", "Virus", "Worm", "Crash"],
-        answer: 0
-    },
-    {
-        question: "Kombinasi tombol keyboard jalan pintas (shortcut) legendaris untuk menyelamatkan tugas dari pemadaman listrik tiba-tiba adalah...",
-        options: ["Ctrl + C", "Ctrl + V", "Ctrl + S", "Ctrl + Z"],
-        answer: 2
-    }
-];
-
-/* ==========================================================================
-   2. DEKLARASI VARIABEL UTAMA
-   ========================================================================== */
-let shuffledQuestions = []; // Array tempat menampung soal yang sudah diacak
+let shuffledQuestions = []; 
 let currentQuestionIndex = 0;
 let score = 0;
 let timer;
@@ -82,10 +26,8 @@ const playerGreeting = document.getElementById("player-greeting");
 const reviewList = document.getElementById("review-list");
 
 /* ==========================================================================
-   3. FUNGSI LOGIKA PERMAINAN & ALGORITMA PENGACAK
+   2. ALGORITMA PENGACAK UTAMA (Fisher-Yates)
    ========================================================================== */
-
-// Fungsi untuk mengacak urutan elemen di dalam Array (Algoritma Fisher-Yates)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -94,6 +36,9 @@ function shuffleArray(array) {
     return array;
 }
 
+/* ==========================================================================
+   3. FUNGSI INTI JALANNYA KUIS
+   ========================================================================== */
 function startQuiz() {
     playerName = usernameInput.value.trim();
     if (playerName === "") {
@@ -106,8 +51,8 @@ function startQuiz() {
     startScreen.classList.add("hide");
     quizScreen.classList.remove("hide");
 
-    // LOGIKA BARU: Gandakan bank soal asli lalu acak urutannya agar tidak merusak data master
-    shuffledQuestions = shuffleArray([...masterQuizData]);
+    // ALGORITMA SUPER: Acak seluruh 105 soal, lalu potong (.slice) ambil 10 soal acak teratas saja!
+    shuffledQuestions = shuffleArray([...masterQuizData]).slice(0, 10);
 
     currentQuestionIndex = 0;
     score = 0;
@@ -119,7 +64,6 @@ function showQuestion() {
     resetTimer();
     startTimer();
 
-    // Mengambil soal dari array yang sudah teracak
     const currentQuiz = shuffledQuestions[currentQuestionIndex];
     questionNumberText.innerText = `Soal ${currentQuestionIndex + 1} dari ${shuffledQuestions.length}`;
     questionText.innerText = currentQuiz.question;
@@ -140,7 +84,7 @@ function checkAnswer(selectedIndex) {
     const correctIndex = currentQuiz.answer;
 
     if (selectedIndex === correctIndex) {
-        score += 10; // Mengubah kalkulasi skor: 10 soal x 10 poin = total 100 poin maksimal
+        score += 10; // 10 soal acak x 10 poin = 100 poin maksimal
     } else {
         wrongAnswersHistory.push({
             question: currentQuiz.question,
