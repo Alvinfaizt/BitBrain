@@ -1,23 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&display=swap');
+
 /* ==========================================================================
-   1. RESET & FONT CONFIGURATION (Strict 8-Bit Retro Arcade Styles)
+   1. RESET, FONT & COLOR CONFIGURATION (Strict 8-Bit Retro Arcade Neon Green)
    ========================================================================== */
+:root {
+    --green: #39ff14; /* Hijau Stabilo/Neon */
+    --black: #000000;
+    --white: #ffffff;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Console', Monaco, monospace;
+    border-radius: 0 !important; /* WAJIB Tajam Kotak Sempurna */
 }
 
 body {
-    background-color: #000000; /* Latar dasar Hitam Pekat */
-    color: #ffffff; 
+    background-color: var(--black); 
+    color: var(--white); 
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     overflow-x: hidden;
-    text-transform: uppercase; /* Kesan game retro 8-bit */
+    text-transform: uppercase; 
+    font-family: 'Silkscreen', sans-serif; /* Default Font Pixel Rapi */
+}
+
+/* Font tebal dan chunky untuk judul dan indikator utama */
+h1, h2, h3, .logo, .intro-logo, .glitch-title, #final-score {
+    font-family: 'Press Start 2P', cursive;
+    font-weight: normal; 
 }
 
 /* ==========================================================================
@@ -29,12 +44,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #000000;
+    background-color: var(--black);
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Transisi patah-patah pixelated saat menghilang */
     transition: transform 0.4s steps(5), opacity 0.4s steps(5);
 }
 
@@ -54,21 +68,20 @@ body {
 
 .terminal-loader {
     text-align: left;
-    background-color: #000000;
-    border: 4px solid #ffffff;
+    background-color: var(--black);
+    border: 4px solid var(--white);
     padding: 20px;
-    border-radius: 0px; 
-    font-size: 1.2rem;
-    font-weight: 900;
-    color: #d4ff00; /* Teks hijau stabilo retro */
-    box-shadow: 6px 6px 0px #ffffff;
+    font-size: 1.1rem;
+    color: var(--green); 
+    box-shadow: 6px 6px 0px var(--white);
+    line-height: 1.5;
 }
 
 .terminal-text {
     display: block;
     white-space: nowrap;
     overflow: hidden;
-    border-right: 15px solid #d4ff00; /* Kursor blok tebal 8-bit */
+    border-right: 15px solid var(--green); 
     width: 0;
 }
 
@@ -78,7 +91,7 @@ body {
 
 @keyframes typing {
     from { width: 0; }
-    to { width: 100%; border-right-color: #d4ff00; }
+    to { width: 100%; border-right-color: var(--green); }
 }
 
 @keyframes blink {
@@ -86,32 +99,29 @@ body {
 }
 
 .intro-logo {
-    font-size: 5rem;
-    font-weight: 900;
-    letter-spacing: -2px;
-    color: #ffffff;
-    text-shadow: 6px 6px 0px #000000, 10px 10px 0px #d4ff00; /* Layer shadow 8-bit */
+    font-size: 3rem; 
+    color: var(--white);
+    text-shadow: 4px 4px 0px var(--black), 8px 8px 0px var(--green);
+    line-height: 1.4;
 }
 
 /* 8-Bit Choppy Loading Bar */
 .progress-bar-container {
     width: 100%;
     height: 35px;
-    background-color: #000000;
-    border: 4px solid #ffffff;
+    background-color: var(--black);
+    border: 4px solid var(--white);
     position: relative;
-    box-shadow: 6px 6px 0px #d4ff00;
+    box-shadow: 6px 6px 0px var(--green);
 }
 
 .progress-bar {
     height: 100%;
     width: 0;
-    background: #d4ff00;
-    /* Efek steps() membuat pergerakan patah-patah seperti bar nyawa game retro */
+    background: var(--green);
     animation: loadProgress 3.5s steps(10) forwards; 
 }
 
-/* Overlay garis-garis pemisah pada progress bar agar terlihat berpetak */
 .progress-bar-container::after {
     content: '';
     position: absolute;
@@ -120,8 +130,8 @@ body {
         to right,
         transparent,
         transparent 9%,
-        #000000 9%,
-        #000000 10%
+        var(--black) 9%,
+        var(--black) 10%
     );
     z-index: 10;
 }
@@ -135,7 +145,7 @@ body {
 }
 
 /* ==========================================================================
-   3. HEADER & LAYOUT COMPONENT (Fighting Game Style)
+   3. HEADER & LAYOUT COMPONENT 
    ========================================================================== */
 header {
     width: 100%;
@@ -144,75 +154,49 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 6px double #ffffff; /* Efek double border retro */
-    background-color: #000000;
+    border-bottom: 6px double var(--white); 
+    background-color: var(--black);
     margin-bottom: 20px;
 }
 
 .logo {
-    font-size: 2.2rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: #ffffff;
-    text-shadow: 4px 4px 0px #d4ff00;
+    font-size: 1.5rem;
+    color: var(--white);
+    text-shadow: 3px 3px 0px var(--green);
 }
 
 .timer-box {
-    background-color: #000000;
+    background-color: var(--green);
     padding: 10px 20px;
-    border: 4px solid #ffffff;
-    font-weight: 900;
+    border: 4px solid var(--white);
     font-size: 1.2rem;
-    color: #ffffff;
-    box-shadow: 6px 6px 0px #d4ff00;
+    color: var(--black);
+    box-shadow: 4px 4px 0px var(--white);
+    font-family: 'Silkscreen', sans-serif;
 }
 
 #timer {
-    color: #d4ff00; 
-    font-size: 2.5rem; /* Besar seperti counter waktu Arcade */
-    text-shadow: 4px 4px 0px #ffffff;
+    color: var(--black); 
+    font-size: 1.8rem; 
 }
 
 /* ==========================================================================
    4. MAIN QUIZ CONTAINER (CRT Monitor Screen)
    ========================================================================== */
 .quiz-container {
-    width: 90%;
-    max-width: 650px;
-    background-color: #000000; 
-    border: 8px solid #ffffff;
-    border-radius: 0;
-    padding: 50px 40px;
-    margin: 40px 0;
-    box-shadow: 15px 15px 0px #d4ff00;
-    color: #ffffff;
+    background-color: var(--white); /* White background for black border contrast */
+    border: 4px solid var(--black);
+    box-shadow: 12px 12px 0px var(--green);
+    color: var(--black);
     position: relative;
-}
-
-/* Inner Frame Kuning Stabilo */
-.quiz-container::before {
-    content: '';
-    position: absolute;
-    top: 6px; left: 6px; right: 6px; bottom: 6px;
-    border: 4px solid #d4ff00;
-    pointer-events: none;
-    z-index: 5;
-}
-
-/* Scanline CRT Effect */
-.quiz-container::after {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    background: linear-gradient(
+    /* Efek Scanline CRT */
+    background-image: repeating-linear-gradient(
         to bottom,
-        rgba(0,0,0,0) 50%,
-        rgba(0,0,0,0.35) 50%
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
     );
-    background-size: 100% 4px; /* Garis horizontal tipis berulang */
-    z-index: 50; 
-    pointer-events: none; /* Clicks tembus */
 }
 
 .screen {
@@ -236,23 +220,19 @@ header {
 }
 
 .glitch-title {
-    font-size: 5rem;
-    font-weight: 900;
-    letter-spacing: -2px;
-    color: #d4ff00;
-    text-shadow: 6px 6px 0px #ffffff;
+    font-size: 2.8rem; 
+    color: var(--black);
+    text-shadow: 3px 3px 0px var(--white), 6px 6px 0px var(--green);
 }
 
 .subtitle {
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    color: #000000;
-    font-weight: 900;
-    background-color: #ffffff;
+    font-size: 1.2rem;
+    color: var(--white);
+    background-color: var(--black);
     padding: 10px 15px;
-    border: 4px solid #d4ff00;
+    border: 4px solid var(--black);
     display: inline-block;
-    box-shadow: 6px 6px 0px #d4ff00;
+    box-shadow: 4px 4px 0px var(--green);
     margin-top: 15px;
 }
 
@@ -267,77 +247,71 @@ header {
    6. FORM ELEMENTS & CHUNKY 3D BUTTONS
    ========================================================================== */
 h2 {
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: #d4ff00;
-    text-shadow: 2px 2px 0px #ffffff;
+    font-size: 1.4rem;
+    color: var(--black);
+    text-shadow: 2px 2px 0px var(--green);
     margin-bottom: 10px;
+    line-height: 1.5;
 }
 
 p {
-    color: #ffffff; 
-    font-size: 1.1rem;
+    color: var(--black); 
+    font-size: 1.2rem;
     line-height: 1.6;
-    font-weight: 900;
 }
 
 .input-group input {
     width: 100%;
     padding: 18px;
-    background-color: #000000;
-    border: 4px solid #ffffff;
-    border-radius: 0;
-    color: #d4ff00;
-    font-size: 1.4rem;
-    font-weight: 900;
+    background-color: var(--white);
+    border: 4px solid var(--black);
+    color: var(--black);
+    font-size: 1.2rem;
     text-align: center;
     outline: none;
-    box-shadow: 6px 6px 0px #d4ff00;
+    box-shadow: 4px 4px 0px var(--black);
     transition: transform 0.1s steps(2), box-shadow 0.1s steps(2);
     text-transform: uppercase;
+    font-family: 'Silkscreen', sans-serif;
 }
 
 .input-group input:focus {
-    transform: translate(4px, 4px);
-    box-shadow: 2px 2px 0px #d4ff00;
-    border-color: #d4ff00;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--black);
+    background-color: var(--green);
 }
 
 .btn {
     width: 100%;
     padding: 18px;
-    border: 4px solid #ffffff;
-    border-radius: 0;
-    font-size: 1.3rem;
-    font-weight: 900;
+    border: 4px solid var(--black);
+    font-size: 1.2rem;
     cursor: pointer;
     transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
     position: relative;
     z-index: 20;
+    font-family: 'Silkscreen', sans-serif;
 }
 
 .btn-primary {
-    background-color: #d4ff00;
-    color: #000000;
-    border-color: #ffffff;
-    box-shadow: 6px 6px 0px #ffffff;
+    background-color: var(--green);
+    color: var(--black);
+    box-shadow: 4px 4px 0px var(--black);
 }
 
 .btn-primary:hover {
-    background-color: #e5ff4d; /* Kuning lebih terang sedikit */
+    background-color: #5eff3d; 
 }
 
-/* Efek mendam ke dalam saat tombol diklik (aktif) */
 .btn-primary:active {
-    transform: translate(6px, 6px);
-    box-shadow: 0px 0px 0px #ffffff;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--black);
 }
 
 .btn-secondary {
-    background-color: #000000;
-    color: #ffffff;
-    border-color: #d4ff00;
-    box-shadow: 6px 6px 0px #d4ff00;
+    background-color: var(--black);
+    color: var(--white);
+    box-shadow: 4px 4px 0px var(--green);
 }
 
 .btn-secondary:hover {
@@ -345,8 +319,8 @@ p {
 }
 
 .btn-secondary:active {
-    transform: translate(6px, 6px);
-    box-shadow: 0px 0px 0px #d4ff00;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--green);
 }
 
 /* ==========================================================================
@@ -354,87 +328,72 @@ p {
    ========================================================================== */
 .quiz-header {
     text-align: left;
-    font-size: 1.3rem;
-    color: #000000;
-    font-weight: 900;
-    background-color: #ffffff;
-    border: 4px solid #d4ff00;
+    font-size: 1.1rem;
+    color: var(--white);
+    background-color: var(--black);
+    border: 4px solid var(--black);
     padding: 8px 16px;
     display: inline-block;
-    box-shadow: 4px 4px 0px #d4ff00;
+    box-shadow: 4px 4px 0px var(--green);
     align-self: flex-start;
 }
 
 #question-text {
-    font-size: 1.6rem;
-    font-weight: 900;
+    font-size: 1.3rem;
     margin-bottom: 20px;
     text-align: left;
-    color: #ffffff;
-    text-shadow: 2px 2px 0px #d4ff00;
+    color: var(--black);
     line-height: 1.6;
-}
-
-.options-grid {
-    display: grid;
-    grid-template-columns: 1fr; 
-    gap: 16px;
-    margin-top: 15px;
 }
 
 .option-btn {
     width: 100%;
     padding: 16px;
-    background-color: #000000;
-    color: #ffffff;
-    border: 4px solid #ffffff;
-    border-radius: 0;
+    background-color: var(--white);
+    color: var(--black);
+    border: 4px solid var(--black);
     font-size: 1.1rem;
-    font-weight: 900;
     text-align: left;
     cursor: pointer;
-    box-shadow: 6px 6px 0px #d4ff00;
+    box-shadow: 4px 4px 0px var(--black);
     transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
     position: relative;
     z-index: 20;
+    font-family: 'Silkscreen', sans-serif;
 }
 
 .option-btn:hover {
-    background-color: #1a1a1a;
-    border-color: #d4ff00;
+    background-color: var(--green);
 }
 
 .option-btn:active, .option-btn.selected {
-    transform: translate(6px, 6px);
-    box-shadow: 0px 0px 0px #d4ff00;
-    background-color: #d4ff00;
-    color: #000000;
-    border-color: #000000;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--black);
+    background-color: var(--black);
+    color: var(--green);
 }
 
 /* ==========================================================================
    8. RESULT SCREEN COMPONENT
    ========================================================================== */
 .score-box {
-    background-color: #000000;
-    border: 6px double #d4ff00; /* Bingkai 8-bit ganda */
+    background-color: var(--black);
+    border: 6px double var(--green); 
     padding: 30px;
-    border-radius: 0;
     margin: 20px 0;
-    box-shadow: 8px 8px 0px #ffffff;
+    box-shadow: 6px 6px 0px var(--black);
 }
 
 .score-box p {
-    font-weight: 900;
-    font-size: 1.4rem;
-    color: #ffffff;
+    font-size: 1.2rem;
+    color: var(--white);
 }
 
 #final-score {
-    font-size: 5rem;
-    font-weight: 900;
-    color: #d4ff00;
-    text-shadow: 4px 4px 0px #ffffff;
+    font-size: 3rem; 
+    color: var(--green);
+    text-shadow: 4px 4px 0px var(--white);
+    margin-top: 15px;
 }
 
 /* Override Inline Styles for Review Container via !important */
@@ -443,35 +402,35 @@ p {
     margin-top: 20px !important;
     max-height: 250px !important;
     overflow-y: auto !important;
-    background: #000000 !important;
+    background: var(--black) !important;
     padding: 20px !important;
-    border-radius: 0 !important;
-    border: 4px solid #ffffff !important;
-    box-shadow: inset 0 0 10px rgba(212, 255, 0, 0.3), 6px 6px 0px #d4ff00 !important;
-    color: #ffffff !important;
+    border: 4px solid var(--black) !important;
+    box-shadow: inset 0 0 10px rgba(57, 255, 20, 0.3), 6px 6px 0px var(--green) !important;
+    color: var(--white) !important;
     position: relative;
     z-index: 20;
+    font-family: 'Silkscreen', sans-serif !important;
 }
 
 #review-container h3 {
-    font-size: 1.4rem !important;
-    font-weight: 900 !important;
+    font-size: 1rem !important;
     margin-bottom: 15px !important;
-    color: #d4ff00 !important;
+    color: var(--green) !important;
     text-transform: uppercase !important;
-    border-bottom: 4px dashed #ffffff !important;
+    border-bottom: 4px dashed var(--white) !important;
     padding-bottom: 10px !important;
+    line-height: 1.5 !important;
 }
 
 #review-list {
-    font-weight: bold;
-    color: #ffffff;
+    color: var(--white);
 }
 
 #review-list p {
     margin-bottom: 15px;
-    border-left: 6px solid #d4ff00;
+    border-left: 6px solid var(--green);
     padding-left: 15px;
+    color: var(--white);
 }
 
 /* ==========================================================================
@@ -481,17 +440,80 @@ footer {
     width: 100%;
     padding: 25px;
     text-align: center;
-    border-top: 6px double #ffffff;
-    background-color: #000000;
-    color: #d4ff00;
+    border-top: 4px solid var(--white);
+    background-color: var(--black);
+    color: var(--green);
     font-size: 1rem;
-    font-weight: 900;
     text-transform: uppercase;
     margin-top: auto;
 }
 
-@media (min-width: 600px) {
-    .options-grid {
-        grid-template-columns: 1fr 1fr;
+/* ==========================================================================
+   10. RESPONSIVE MULTI-DEVICE MEDIA QUERIES
+   ========================================================================== */
+
+/* 📱 Mobile Friendly (< 600px) */
+@media (max-width: 599px) {
+    header { 
+        flex-direction: column; 
+        gap: 15px; 
+        text-align: center; 
+    }
+    .intro-logo { font-size: 1.5rem; text-shadow: 3px 3px 0px var(--black), 5px 5px 0px var(--green); }
+    .glitch-title { font-size: 1.6rem; text-shadow: 2px 2px 0px var(--white), 4px 4px 0px var(--green); }
+    h2 { font-size: 1.1rem; }
+    #final-score { font-size: 1.8rem; }
+    
+    .quiz-container { 
+        width: 95%; 
+        padding: 25px 15px; 
+        margin: 20px auto; 
+    }
+    
+    /* 1 Kolom Penuh untuk Layar Kecil (Jempol) */
+    .options-grid { 
+        display: grid; 
+        grid-template-columns: 1fr; 
+        gap: 12px;
+    }
+    
+    .btn { padding: 14px; font-size: 1rem; }
+    .option-btn { padding: 14px; font-size: 0.9rem; }
+    .terminal-loader { font-size: 0.9rem; padding: 15px; }
+}
+
+/* 💻 Tablet Friendly (600px - 900px) */
+@media (min-width: 600px) and (max-width: 900px) {
+    .quiz-container { 
+        width: 85%; 
+        padding: 35px; 
+        margin: 30px auto; 
+    }
+    
+    /* 2 Kolom Seimbang */
+    .options-grid { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 16px;
+    }
+    
+    .intro-logo { font-size: 2.2rem; }
+    .glitch-title { font-size: 2.2rem; }
+}
+
+/* 🖥️ Desktop Friendly (> 900px) */
+@media (min-width: 901px) {
+    .quiz-container { 
+        width: 90%; 
+        max-width: 700px; 
+        padding: 50px; 
+        margin: 40px auto;
+    }
+    
+    /* 2 Kolom Lebar */
+    .options-grid { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 16px;
     }
 }
